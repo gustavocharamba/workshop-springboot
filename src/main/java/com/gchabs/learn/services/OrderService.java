@@ -1,7 +1,6 @@
 package com.gchabs.learn.services;
 
 import com.gchabs.learn.entities.Order;
-import com.gchabs.learn.entities.User;
 import com.gchabs.learn.repositories.OrderRepository;
 import com.gchabs.learn.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
