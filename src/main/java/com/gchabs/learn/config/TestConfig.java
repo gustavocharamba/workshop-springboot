@@ -1,14 +1,8 @@
 package com.gchabs.learn.config;
 
-import com.gchabs.learn.entities.Category;
-import com.gchabs.learn.entities.Product;
-import com.gchabs.learn.entities.User;
-import com.gchabs.learn.entities.Order;
+import com.gchabs.learn.entities.*;
 import com.gchabs.learn.entities.enums.OrderStatus;
-import com.gchabs.learn.repositories.OrderRepository;
-import com.gchabs.learn.repositories.ProductRepository;
-import com.gchabs.learn.repositories.UserRepository;
-import com.gchabs.learn.repositories.CategoryRepository;
+import com.gchabs.learn.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -69,5 +66,13 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
     }
 }
