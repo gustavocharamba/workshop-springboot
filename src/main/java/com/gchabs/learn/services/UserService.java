@@ -2,8 +2,11 @@ package com.gchabs.learn.services;
 
 import com.gchabs.learn.entities.User;
 import com.gchabs.learn.repositories.UserRepository;
+import com.gchabs.learn.services.exceptions.DatabaseException;
 import com.gchabs.learn.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +33,14 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User obj){
